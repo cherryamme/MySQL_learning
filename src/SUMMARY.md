@@ -1,6 +1,6 @@
 # Summary
 
-- [1-SQL基础知识.md](1-SQL基础知识.md) ](./chapter_1.md)
+- [1-SQL基础知识.md](1-SQL基础知识.md) ]
 - [2-MySQL安装.md](2-MySQL安装.md) 
 - [3-MySQL管理.md](3-MySQL管理.md) 
 - [4-数据类型.md](4-数据类型.md)  
