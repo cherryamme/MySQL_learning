@@ -1,0 +1,253 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+
+<head>
+    <!-- Book generated using mdBook -->
+    <meta charset="UTF-8">
+    <title>MySQL数据处理 - Jesse的MySQL入门</title>
+    <!-- Custom HTML head -->
+    
+
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff" />
+
+    <link rel="icon" href="favicon.svg">
+    <link rel="shortcut icon" href="favicon.png">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="css/chrome.css">
+    <link rel="stylesheet" href="css/print.css" media="print">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+    <link rel="stylesheet" href="fonts/fonts.css">
+    <!-- Highlight.js Stylesheets -->
+    <link rel="stylesheet" href="highlight.css">
+    <link rel="stylesheet" href="tomorrow-night.css">
+    <link rel="stylesheet" href="ayu-highlight.css">
+
+    <!-- Custom theme stylesheets -->
+    <!-- MathJax -->
+    <script async type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+
+<body>
+    <!-- Provide site root to javascript -->
+    <script type="text/javascript">
+        var path_to_root = "";
+        var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+    </script>
+
+    <!-- Work around some values being stored in localStorage wrapped in quotes -->
+    <script type="text/javascript">
+        try {
+            var theme = localStorage.getItem('mdbook-theme');
+            var sidebar = localStorage.getItem('mdbook-sidebar');
+
+            if (theme.startsWith('"') && theme.endsWith('"')) {
+                localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+            }
+
+            if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+            }
+        } catch (e) { }
+    </script>
+
+    <!-- Set the theme before any content is loaded, prevents flash -->
+    <script type="text/javascript">
+        var theme;
+        try { theme = localStorage.getItem('mdbook-theme'); } catch (e) { }
+        if (theme === null || theme === undefined) { theme = default_theme; }
+        var html = document.querySelector('html');
+        html.classList.remove('no-js')
+        html.classList.remove('light')
+        html.classList.add(theme);
+        html.classList.add('js');
+    </script>
+
+    <!-- Hide / unhide sidebar before it is displayed -->
+    <script type="text/javascript">
+        var html = document.querySelector('html');
+        var sidebar = 'hidden';
+        if (document.body.clientWidth >= 1080) {
+            try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch (e) { }
+            sidebar = sidebar || 'visible';
+        }
+        html.classList.remove('sidebar-visible');
+        html.classList.add("sidebar-" + sidebar);
+    </script>
+
+    <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+        <div class="sidebar-scrollbox">
+            <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">README</a></li><li class="chapter-item expanded "><a href="1-SQL基础知识.html">SQL基础知识</a></li><li class="chapter-item expanded "><a href="2-MySQL安装.html">MySQL安装</a></li><li class="chapter-item expanded "><a href="3-MySQL管理.html">MySQL管理</a></li><li class="chapter-item expanded "><a href="4-数据类型.html">数据类型</a></li><li class="chapter-item expanded "><a href="5-创建数据表.html">创建数据表</a></li><li class="chapter-item expanded "><a href="6-删除数据表.html">删除数据表</a></li><li class="chapter-item expanded "><a href="7-修改数据.html">修改数据</a></li><li class="chapter-item expanded "><a href="8-查询数据表.html">查询数据表</a></li><li class="chapter-item expanded "><a href="9-MySQL数据处理.html" class="active">MySQL数据处理</a></li><li class="chapter-item expanded "><a href="10-MySQL事务.html">MySQL事务</a></li><li class="chapter-item expanded "><a href="11-建立索引.html">建立索引</a></li><li class="chapter-item expanded "><a href="12-临时表.html">临时表</a></li><li class="chapter-item expanded "><a href="13-自增序列.html">自增序列</a></li><li class="chapter-item expanded "><a href="14-重复数据.html">重复数据</a></li><li class="chapter-item expanded "><a href="15-MySQL常用函数.html">MySQL常用函数</a></li></ol>
+        </div>
+        <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+    </nav>
+
+    <div id="page-wrapper" class="page-wrapper">
+
+        <div class="page">
+            
+            <div id="menu-bar-hover-placeholder"></div>
+            <div id="menu-bar" class="menu-bar sticky bordered">
+                <div class="left-buttons">
+                    <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents"
+                        aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <button id="theme-toggle" class="icon-button" type="button" title="Change theme"
+                        aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                        <i class="fa fa-paint-brush"></i>
+                    </button>
+                    <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                        <li role="none"><button role="menuitem" class="theme"
+                                id="lfe-pdp">LFE PDP</button></li>
+                        <li role="none"><button role="menuitem" class="theme"
+                                id="light">Light (default)</button></li>
+                        <li role="none"><button role="menuitem" class="theme"
+                                id="rust">Rust</button></li>
+                        <li role="none"><button role="menuitem" class="theme"
+                                id="coal">Coal</button></li>
+                        <li role="none"><button role="menuitem" class="theme"
+                                id="navy">Navy</button></li>
+                        <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button>
+                        </li>
+                    </ul>
+                    <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)"
+                        aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S"
+                        aria-controls="searchbar">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+
+                <h1 class="menu-title">Jesse的MySQL入门</h1>
+
+                <div class="right-buttons">
+                    <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <i id="print-button" class="fa fa-print"></i>
+                    </a>
+                    <a href="https://github.com/cherryamme/mdbook_jc" title="Git repository" aria-label="Git repository">
+                        <i id="git-repository-button" class="fa fa-github"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div id="search-wrapper" class="hidden">
+                <form id="searchbar-outer" class="searchbar-outer">
+                    <input type="search" name="search" id="searchbar" name="searchbar"
+                        placeholder="Search this book ..." aria-controls="searchresults-outer"
+                        aria-describedby="searchresults-header">
+                </form>
+                <div id="searchresults-outer" class="searchresults-outer hidden">
+                    <div id="searchresults-header" class="searchresults-header"></div>
+                    <ul id="searchresults">
+                    </ul>
+                </div>
+            </div>
+            <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+            <script type="text/javascript">
+                document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                Array.from(document.querySelectorAll('#sidebar a')).forEach(function (link) {
+                    link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                });
+            </script>
+
+            <div id="content" class="content">
+                <main>
+                    <!-- order:9 -->
+<h2 id="mysql数据处理"><a class="header" href="#mysql数据处理">MySQL数据处理</a></h2>
+<h3 id="null值处理"><a class="header" href="#null值处理">NULL值处理</a></h3>
+<p>关于null值的处理，MySQL提供了三大运算符:</p>
+<ul>
+<li><strong>IS NULL:</strong> 当列的值是NULL,此运算符返回true。</li>
+<li><strong>IS NOT NULL:</strong> 当列的值不为NULL, 运算符返回true。</li>
+<li><strong>&lt;=&gt;:</strong> 比较操作符（不同于=运算符），当比较的的两个值为NULL时返回true。</li>
+</ul>
+<p>关于 NULL 的条件比较运算是比较特殊的。你不能使用 = NULL 或 != NULL 在列中查找 NULL 值 。</p>
+<p>在MySQL中，NULL值与任何其它值的比较（即使是NULL）永远返回false，即 NULL = NULL 返回false 。</p>
+<p>MySQL中处理NULL使用IS NULL和IS NOT NULL运算符。</p>
+<h3 id="正则表达式"><a class="header" href="#正则表达式">正则表达式</a></h3>
+<p>我们已经了解到MySQL可以通过 <strong>LIKE ...%</strong> 来进行模糊匹配。</p>
+<p>MySQL 同样也支持其他正则表达式的匹配， MySQL中使用 REGEXP 操作符来进行正则表达式匹配。</p>
+<p>如果您了解PHP或Perl，那么操作起来就非常简单，因为MySQL的正则表达式匹配与这些脚本的类似。</p>
+<p>下表中的正则模式可应用于 REGEXP 操作符中。</p>
+<table><thead><tr><th align="left">模式</th><th align="left">描述</th></tr></thead><tbody>
+<tr><td align="left">^</td><td align="left">匹配输入字符串的开始位置。如果设置了 RegExp 对象的 Multiline 属性，^ 也匹配 '\n' 或 '\r' 之后的位置。</td></tr>
+<tr><td align="left">$</td><td align="left">匹配输入字符串的结束位置。如果设置了RegExp 对象的 Multiline 属性，$ 也匹配 '\n' 或 '\r' 之前的位置。</td></tr>
+<tr><td align="left">.</td><td align="left">匹配除 &quot;\n&quot; 之外的任何单个字符。要匹配包括 '\n' 在内的任何字符，请使用象 '[.\n]' 的模式。</td></tr>
+<tr><td align="left">[...]</td><td align="left">字符集合。匹配所包含的任意一个字符。例如， '[abc]' 可以匹配 &quot;plain&quot; 中的 'a'。</td></tr>
+<tr><td align="left"><sup class="footnote-reference"><a href="#...">1</a></sup></td><td align="left">负值字符集合。匹配未包含的任意字符。例如， '<sup class="footnote-reference"><a href="#abc">2</a></sup>' 可以匹配 &quot;plain&quot; 中的'p'。</td></tr>
+<tr><td align="left">p1|p2|p3</td><td align="left">匹配 p1 或 p2 或 p3。例如，'z|food' 能匹配 &quot;z&quot; 或 &quot;food&quot;。'(z|f)ood' 则匹配 &quot;zood&quot; 或 &quot;food&quot;。</td></tr>
+<tr><td align="left"></td><td align="left">匹配前面的子表达式零次或多次。例如，zo 能匹配 &quot;z&quot; 以及 &quot;zoo&quot;。* 等价于{0,}。</td></tr>
+<tr><td align="left">+</td><td align="left">匹配前面的子表达式一次或多次。例如，'zo+' 能匹配 &quot;zo&quot; 以及 &quot;zoo&quot;，但不能匹配 &quot;z&quot;。+ 等价于 {1,}。</td></tr>
+<tr><td align="left">{n}</td><td align="left">n 是一个非负整数。匹配确定的 n 次。例如，'o{2}' 不能匹配 &quot;Bob&quot; 中的 'o'，但是能匹配 &quot;food&quot; 中的两个 o。</td></tr>
+<tr><td align="left">{n,m}</td><td align="left">m 和 n 均为非负整数，其中n &lt;= m。最少匹配 n 次且最多匹配 m 次。</td></tr>
+</tbody></table>
+<p><strong>示例</strong></p>
+<p>查找name字段中以'st'为开头的所有数据：</p>
+<pre><code>mysql&gt; SELECT name FROM person_tbl WHERE name REGEXP '^st';
+</code></pre>
+<p>查找name字段中以'ok'为结尾的所有数据：</p>
+<pre><code>mysql&gt; SELECT name FROM person_tbl WHERE name REGEXP 'ok$';
+</code></pre>
+<p>查找name字段中包含'mar'字符串的所有数据：</p>
+<pre><code>mysql&gt; SELECT name FROM person_tbl WHERE name REGEXP 'mar';
+</code></pre>
+<p>查找name字段中以元音字符开头或以'ok'字符串结尾的所有数据：</p>
+<pre><code>mysql&gt; SELECT name FROM person_tbl WHERE name REGEXP '^[aeiou]|ok$';
+</code></pre>
+
+                </main>
+
+                <nav class="nav-wrapper" aria-label="Page navigation">
+                    <!-- Mobile navigation buttons -->
+                    <a rel="prev" href="8-查询数据表.html" class="mobile-nav-chapters previous"
+                        title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="10-MySQL事务.html" class="mobile-nav-chapters next"
+                        title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                    <div style="clear: both"></div>
+                </nav>
+            </div>
+        </div>
+
+        <nav class="nav-wide-wrapper" aria-label="Page navigation">
+            <a rel="prev" href="8-查询数据表.html" class="nav-chapters previous" title="Previous chapter"
+                aria-label="Previous chapter" aria-keyshortcuts="Left">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            <a rel="next" href="10-MySQL事务.html" class="nav-chapters next" title="Next chapter"
+                aria-label="Next chapter" aria-keyshortcuts="Right">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        </nav>
+
+    </div>
+
+    <script type="text/javascript">
+        window.playground_copyable = true;
+    </script>
+    <script src="ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="editor.js" type="text/javascript" charset="utf-8"></script>
+    <script src="mode-rust.js" type="text/javascript" charset="utf-8"></script>
+    <script src="theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+    <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+    <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+    <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+    <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- Custom JS scripts -->
+</body>
+
+</html>

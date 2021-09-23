@@ -1,0 +1,502 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+
+<head>
+    <!-- Book generated using mdBook -->
+    <meta charset="UTF-8">
+    <title>MySQL常用函数 - Jesse的MySQL入门</title>
+    <!-- Custom HTML head -->
+    
+
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff" />
+
+    <link rel="icon" href="favicon.svg">
+    <link rel="shortcut icon" href="favicon.png">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="css/chrome.css">
+    <link rel="stylesheet" href="css/print.css" media="print">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+    <link rel="stylesheet" href="fonts/fonts.css">
+    <!-- Highlight.js Stylesheets -->
+    <link rel="stylesheet" href="highlight.css">
+    <link rel="stylesheet" href="tomorrow-night.css">
+    <link rel="stylesheet" href="ayu-highlight.css">
+
+    <!-- Custom theme stylesheets -->
+    <!-- MathJax -->
+    <script async type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+
+<body>
+    <!-- Provide site root to javascript -->
+    <script type="text/javascript">
+        var path_to_root = "";
+        var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+    </script>
+
+    <!-- Work around some values being stored in localStorage wrapped in quotes -->
+    <script type="text/javascript">
+        try {
+            var theme = localStorage.getItem('mdbook-theme');
+            var sidebar = localStorage.getItem('mdbook-sidebar');
+
+            if (theme.startsWith('"') && theme.endsWith('"')) {
+                localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+            }
+
+            if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+            }
+        } catch (e) { }
+    </script>
+
+    <!-- Set the theme before any content is loaded, prevents flash -->
+    <script type="text/javascript">
+        var theme;
+        try { theme = localStorage.getItem('mdbook-theme'); } catch (e) { }
+        if (theme === null || theme === undefined) { theme = default_theme; }
+        var html = document.querySelector('html');
+        html.classList.remove('no-js')
+        html.classList.remove('light')
+        html.classList.add(theme);
+        html.classList.add('js');
+    </script>
+
+    <!-- Hide / unhide sidebar before it is displayed -->
+    <script type="text/javascript">
+        var html = document.querySelector('html');
+        var sidebar = 'hidden';
+        if (document.body.clientWidth >= 1080) {
+            try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch (e) { }
+            sidebar = sidebar || 'visible';
+        }
+        html.classList.remove('sidebar-visible');
+        html.classList.add("sidebar-" + sidebar);
+    </script>
+
+    <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+        <div class="sidebar-scrollbox">
+            <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">README</a></li><li class="chapter-item expanded "><a href="1-SQL基础知识.html">SQL基础知识</a></li><li class="chapter-item expanded "><a href="2-MySQL安装.html">MySQL安装</a></li><li class="chapter-item expanded "><a href="3-MySQL管理.html">MySQL管理</a></li><li class="chapter-item expanded "><a href="4-数据类型.html">数据类型</a></li><li class="chapter-item expanded "><a href="5-创建数据表.html">创建数据表</a></li><li class="chapter-item expanded "><a href="6-删除数据表.html">删除数据表</a></li><li class="chapter-item expanded "><a href="7-修改数据.html">修改数据</a></li><li class="chapter-item expanded "><a href="8-查询数据表.html">查询数据表</a></li><li class="chapter-item expanded "><a href="9-MySQL数据处理.html">MySQL数据处理</a></li><li class="chapter-item expanded "><a href="10-MySQL事务.html">MySQL事务</a></li><li class="chapter-item expanded "><a href="11-建立索引.html">建立索引</a></li><li class="chapter-item expanded "><a href="12-临时表.html">临时表</a></li><li class="chapter-item expanded "><a href="13-自增序列.html">自增序列</a></li><li class="chapter-item expanded "><a href="14-重复数据.html">重复数据</a></li><li class="chapter-item expanded "><a href="15-MySQL常用函数.html" class="active">MySQL常用函数</a></li></ol>
+        </div>
+        <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+    </nav>
+
+    <div id="page-wrapper" class="page-wrapper">
+
+        <div class="page">
+            
+            <div id="menu-bar-hover-placeholder"></div>
+            <div id="menu-bar" class="menu-bar sticky bordered">
+                <div class="left-buttons">
+                    <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents"
+                        aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <button id="theme-toggle" class="icon-button" type="button" title="Change theme"
+                        aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                        <i class="fa fa-paint-brush"></i>
+                    </button>
+                    <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                        <li role="none"><button role="menuitem" class="theme"
+                                id="lfe-pdp">LFE PDP</button></li>
+                        <li role="none"><button role="menuitem" class="theme"
+                                id="light">Light (default)</button></li>
+                        <li role="none"><button role="menuitem" class="theme"
+                                id="rust">Rust</button></li>
+                        <li role="none"><button role="menuitem" class="theme"
+                                id="coal">Coal</button></li>
+                        <li role="none"><button role="menuitem" class="theme"
+                                id="navy">Navy</button></li>
+                        <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button>
+                        </li>
+                    </ul>
+                    <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)"
+                        aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S"
+                        aria-controls="searchbar">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+
+                <h1 class="menu-title">Jesse的MySQL入门</h1>
+
+                <div class="right-buttons">
+                    <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <i id="print-button" class="fa fa-print"></i>
+                    </a>
+                    <a href="https://github.com/cherryamme/mdbook_jc" title="Git repository" aria-label="Git repository">
+                        <i id="git-repository-button" class="fa fa-github"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div id="search-wrapper" class="hidden">
+                <form id="searchbar-outer" class="searchbar-outer">
+                    <input type="search" name="search" id="searchbar" name="searchbar"
+                        placeholder="Search this book ..." aria-controls="searchresults-outer"
+                        aria-describedby="searchresults-header">
+                </form>
+                <div id="searchresults-outer" class="searchresults-outer hidden">
+                    <div id="searchresults-header" class="searchresults-header"></div>
+                    <ul id="searchresults">
+                    </ul>
+                </div>
+            </div>
+            <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+            <script type="text/javascript">
+                document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                Array.from(document.querySelectorAll('#sidebar a')).forEach(function (link) {
+                    link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                });
+            </script>
+
+            <div id="content" class="content">
+                <main>
+                    <!-- order:15 -->
+<h2 id="mysql-常用函数"><a class="header" href="#mysql-常用函数">MySQL 常用函数</a></h2>
+<h3 id="时间函数"><a class="header" href="#时间函数">时间函数</a></h3>
+<h4 id="date_adddate_sub"><a class="header" href="#date_adddate_sub"><code>date_add()、date_sub()</code></a></h4>
+<p>增加/减少一天</p>
+<pre><code class="language-sql"> DATE_ADD(date,INTERVAL expr type)
+</code></pre>
+<table><thead><tr><th align="left">Type 值</th></tr></thead><tbody>
+<tr><td align="left">MICROSECOND</td></tr>
+<tr><td align="left">SECOND</td></tr>
+<tr><td align="left">MINUTE</td></tr>
+<tr><td align="left">HOUR</td></tr>
+<tr><td align="left">DAY</td></tr>
+<tr><td align="left">WEEK</td></tr>
+<tr><td align="left">MONTH</td></tr>
+<tr><td align="left">QUARTER</td></tr>
+<tr><td align="left">YEAR</td></tr>
+<tr><td align="left">SECOND_MICROSECOND</td></tr>
+<tr><td align="left">MINUTE_MICROSECOND</td></tr>
+<tr><td align="left">MINUTE_SECOND</td></tr>
+<tr><td align="left">HOUR_MICROSECOND</td></tr>
+<tr><td align="left">HOUR_SECOND</td></tr>
+<tr><td align="left">HOUR_MINUTE</td></tr>
+<tr><td align="left">DAY_MICROSECOND</td></tr>
+<tr><td align="left">DAY_SECOND</td></tr>
+<tr><td align="left">DAY_MINUTE</td></tr>
+<tr><td align="left">DAY_HOUR</td></tr>
+<tr><td align="left">YEAR_MONTH</td></tr>
+</tbody></table>
+<h4 id="datediff"><a class="header" href="#datediff"><code>datediff()</code></a></h4>
+<p>DATEDIFF() 函数返回两个日期之间的天数。</p>
+<pre><code class="language-sql">DATEDIFF(date1,date2)
+</code></pre>
+<h4 id="date_format"><a class="header" href="#date_format"><code>date_format()</code></a></h4>
+<p>DATE_FORMAT() 函数用于以不同的格式显示日期/时间数据。</p>
+<pre><code class="language-sql">DATE_FORMAT(date,format)
+</code></pre>
+<table><thead><tr><th align="left">格式</th><th align="left">描述</th></tr></thead><tbody>
+<tr><td align="left">%a</td><td align="left">缩写星期名</td></tr>
+<tr><td align="left">%b</td><td align="left">缩写月名</td></tr>
+<tr><td align="left">%c</td><td align="left">月，数值</td></tr>
+<tr><td align="left">%D</td><td align="left">带有英文前缀的月中的天</td></tr>
+<tr><td align="left">%d</td><td align="left">月的天，数值（00-31）</td></tr>
+<tr><td align="left">%e</td><td align="left">月的天，数值（0-31）</td></tr>
+<tr><td align="left">%f</td><td align="left">微秒</td></tr>
+<tr><td align="left">%H</td><td align="left">小时（00-23）</td></tr>
+<tr><td align="left">%h</td><td align="left">小时（01-12）</td></tr>
+<tr><td align="left">%I</td><td align="left">小时（01-12）</td></tr>
+<tr><td align="left">%i</td><td align="left">分钟，数值（00-59）</td></tr>
+<tr><td align="left">%j</td><td align="left">年的天（001-366）</td></tr>
+<tr><td align="left">%k</td><td align="left">小时（0-23）</td></tr>
+<tr><td align="left">%l</td><td align="left">小时（1-12）</td></tr>
+<tr><td align="left">%M</td><td align="left">月名</td></tr>
+<tr><td align="left">%m</td><td align="left">月，数值（00-12）</td></tr>
+<tr><td align="left">%p</td><td align="left">AM 或 PM</td></tr>
+<tr><td align="left">%r</td><td align="left">时间，12-小时（hh:mm:ss AM 或 PM）</td></tr>
+<tr><td align="left">%S</td><td align="left">秒（00-59）</td></tr>
+<tr><td align="left">%s</td><td align="left">秒（00-59）</td></tr>
+<tr><td align="left">%T</td><td align="left">时间, 24-小时（hh:mm:ss）</td></tr>
+<tr><td align="left">%U</td><td align="left">周（00-53）星期日是一周的第一天</td></tr>
+<tr><td align="left">%u</td><td align="left">周（00-53）星期一是一周的第一天</td></tr>
+<tr><td align="left">%V</td><td align="left">周（01-53）星期日是一周的第一天，与 %X 使用</td></tr>
+<tr><td align="left">%v</td><td align="left">周（01-53）星期一是一周的第一天，与 %x 使用</td></tr>
+<tr><td align="left">%W</td><td align="left">星期名</td></tr>
+<tr><td align="left">%w</td><td align="left">周的天（0=星期日, 6=星期六）</td></tr>
+<tr><td align="left">%X</td><td align="left">年，其中的星期日是周的第一天，4 位，与 %V 使用</td></tr>
+<tr><td align="left">%x</td><td align="left">年，其中的星期一是周的第一天，4 位，与 %v 使用</td></tr>
+<tr><td align="left">%Y</td><td align="left">年，4 位</td></tr>
+<tr><td align="left">%y</td><td align="left">年，2 位</td></tr>
+</tbody></table>
+<p><strong>示例</strong></p>
+<pre><code class="language-sql">select  
+DATE_FORMAT(NOW(),'%b %d %Y %h:%i %p'),
+DATE_FORMAT(NOW(),'%m-%d-%Y'),
+DATE_FORMAT(NOW(),'%d %b %y'),
+DATE_FORMAT(NOW(),'%d %b %Y %T:%f')
+</code></pre>
+<p>结果如下所示：</p>
+<pre><code class="language-sql"> Nov 04 2008 11:45 PM
+ 11-04-2008
+ 04 Nov 08
+ 04 Nov 2008 11:45:34:243 
+</code></pre>
+<h4 id="nowcurdatecurtime"><a class="header" href="#nowcurdatecurtime"><code>now()、curdate()、curtime()</code></a></h4>
+<p>NOW() 返回当前的日期和时间。</p>
+<table><thead><tr><th align="left">NOW()</th><th align="left">CURDATE()</th><th align="left">CURTIME()</th></tr></thead><tbody>
+<tr><td align="left">2008-11-11 12:45:34</td><td align="left">2008-11-11</td><td align="left">12:45:34</td></tr>
+</tbody></table>
+<h4 id="date"><a class="header" href="#date"><code>Date()</code></a></h4>
+<p>DATE() 函数提取日期或日期/时间表达式的日期部分。</p>
+<p><code>2008-11-11 13:23:44.657</code> → <code>2008-11-11</code></p>
+<h4 id="extract"><a class="header" href="#extract"><code>extract()</code></a></h4>
+<p>EXTRACT() 函数用于返回日期/时间的单独部分，比如年、月、日、小时、分钟等等。</p>
+<pre><code class="language-sql"> EXTRACT(unit FROM date)
+</code></pre>
+<p>date 参数是合法的日期表达式。unit 参数可以是下列的值：</p>
+<table><thead><tr><th align="left">Unit 值</th></tr></thead><tbody>
+<tr><td align="left">MICROSECOND</td></tr>
+<tr><td align="left">SECOND</td></tr>
+<tr><td align="left">MINUTE</td></tr>
+<tr><td align="left">HOUR</td></tr>
+<tr><td align="left">DAY</td></tr>
+<tr><td align="left">WEEK</td></tr>
+<tr><td align="left">MONTH</td></tr>
+<tr><td align="left">QUARTER</td></tr>
+<tr><td align="left">YEAR</td></tr>
+<tr><td align="left">SECOND_MICROSECOND</td></tr>
+<tr><td align="left">MINUTE_MICROSECOND</td></tr>
+<tr><td align="left">MINUTE_SECOND</td></tr>
+<tr><td align="left">HOUR_MICROSECOND</td></tr>
+<tr><td align="left">HOUR_SECOND</td></tr>
+<tr><td align="left">HOUR_MINUTE</td></tr>
+<tr><td align="left">DAY_MICROSECOND</td></tr>
+<tr><td align="left">DAY_SECOND</td></tr>
+<tr><td align="left">DAY_MINUTE</td></tr>
+<tr><td align="left">DAY_HOUR</td></tr>
+<tr><td align="left">YEAR_MONTH</td></tr>
+</tbody></table>
+<h3 id="字符串连接函数"><a class="header" href="#字符串连接函数">字符串连接函数</a></h3>
+<h4 id="concatconcat_wsgroup_concat"><a class="header" href="#concatconcat_wsgroup_concat"><code>Concat()、concat_ws()、group_concat()</code></a></h4>
+<p>字符串连接函数 </p>
+<p>使用方法：
+CONCAT(str1,str2,…) </p>
+<p>CONCAT_WS(separator,str1,str2,...)</p>
+<p>group_concat([DISTINCT] 要连接的字段 [Order BY ASC/DESC 排序字段] [Separator '分隔符'])</p>
+<p>**CONCAT()**返回结果为连接参数产生的字符串。如有任何一个参数为NULL ，则返回值为 NULL。</p>
+<blockquote>
+<p>注意：
+如果所有参数均为非二进制字符串，则结果为非二进制字符串。 
+如果自变量中含有任一二进制字符串，则结果为一个二进制字符串。
+一个数字参数被转化为与之相等的二进制字符串格式；若要避免这种情况，可使用显式类型 cast</p>
+</blockquote>
+<p><strong>CONCAT_WS()</strong> 代表 CONCAT With Separator ，是CONCAT()的特殊形式。第一个参数是其它参数的分隔符。分隔符的位置放在要连接的两个字符串之间。分隔符可以是一个字符串，也可以是其它参数。</p>
+<blockquote>
+<p>和MySQL中concat函数不同的是, concat_ws函数在执行的时候,不会因为NULL值而返回NULL 。</p>
+<p>如果分隔符为 NULL，则结果为 NULL。函数会忽略任何分隔符参数后的 NULL 值。</p>
+</blockquote>
+<p><strong>Group_concat()：</strong></p>
+<pre><code class="language-sql"># 以id分组，把name字段的值打印在一行，逗号分隔(默认)
+select id,group_concat(name) from aa group by id;
+
+# 以id分组，把name字段的值打印在一行，分号分隔
+select id,group_concat(name separator ';') from aa group by id;
+
+# 以id分组，把去冗余的name字段的值打印在一行
+select id,group_concat(distinct name) from aa group by id;
+
+# 以id分组，把name字段的值打印在一行，逗号分隔，以name排倒序
+select id,group_concat(name order by name desc) from aa group by id;
+</code></pre>
+<h4 id="repeat"><a class="header" href="#repeat"><code>repeat()</code></a></h4>
+<p>用来复制字符串,如下'ab'表示要复制的字符串，2表示复制的份数</p>
+<pre><code class="language-sql">select repeat('ab',2);
+</code></pre>
+<h3 id="字符串截取函数"><a class="header" href="#字符串截取函数">字符串截取函数</a></h3>
+<h4 id="1从左开始截取字符串"><a class="header" href="#1从左开始截取字符串"><strong>1、从左开始截取字符串</strong></a></h4>
+<p>left（str, length） 
+说明：left（被截取字段，截取长度） 
+例：</p>
+<pre><code class="language-sql">select left(content,200) as abstract from my_content_t 
+</code></pre>
+<h4 id="2从右开始截取字符串"><a class="header" href="#2从右开始截取字符串"><strong>2、从右开始截取字符串</strong></a></h4>
+<p>right（str, length） 
+说明：right（被截取字段，截取长度） 
+例：</p>
+<pre><code class="language-sql">select right(content,200) as abstract from my_content_t 
+</code></pre>
+<h4 id="3截取字符串-"><a class="header" href="#3截取字符串-">**3、截取字符串 **</a></h4>
+<p>substring（str, pos） 
+substring（str, pos, length） 
+说明：substring（被截取字段，从第几位开始截取，截取长度） </p>
+<p>例：</p>
+<pre><code class="language-sql">select substring(content,5) as abstract from my_content_t 
+select substring(content,5,200) as abstract from my_content_t 
+</code></pre>
+<blockquote>
+<p>（注：如果位数是负数 如-5 则是从后倒数位数，到字符串结束或截取的长度） </p>
+</blockquote>
+<h4 id="4按关键字截取字符串"><a class="header" href="#4按关键字截取字符串"><strong>4、按关键字截取字符串</strong></a></h4>
+<p>substring_index（str,delim,count） 
+说明：substring_index（被截取字段，分隔符，关键字出现的次数） </p>
+<p>例：</p>
+<pre><code class="language-sql">select substring_index(&quot;www.baidu.com&quot;,&quot;.&quot;,2) as abstract from wiki_user 
+# （注：如果关键字出现的次数是负数 如-2 则是从后倒数，到字符串结束） 
+# 结果 www.baidu
+</code></pre>
+<h3 id="数学函数"><a class="header" href="#数学函数">数学函数</a></h3>
+<h4 id="abs绝对值"><a class="header" href="#abs绝对值">ABS()——绝对值</a></h4>
+<p><code>ABS(X)</code>返回 <code>X</code> 的绝对值：</p>
+<pre><code class="language-sql">mysql&gt; SELECT ABS(2); -&gt; 2 mysql&gt; SELECT ABS(-32); -&gt; 32
+</code></pre>
+<p>s这个函数可安全地使用于 <code>BIGINT</code> 值。</p>
+<h4 id="sign取正负"><a class="header" href="#sign取正负">sign()——取正负</a></h4>
+<p><code>SIGN(X)</code>以 <code>-1</code>、<code>0</code> 或 <code>1</code> 方式返回参数的符号，它取决于参数 <code>X</code> 是负数、0 或正数。</p>
+<pre><code class="language-sql">mysql&gt; SELECT SIGN(-32); -&gt; -1 mysql&gt; SELECT SIGN(0); -&gt; 0 mysql&gt; SELECT SIGN(234); -&gt; 1
+</code></pre>
+<h4 id="mod取模"><a class="header" href="#mod取模">MOD()——取模</a></h4>
+<p><code>MOD(N,M)</code>% 取模 (就如 C 中的 <code>%</code> 操作符)。返回 <code>N</code> 被 <code>M</code> 除后的余数：</p>
+<pre><code class="language-sql">mysql&gt; SELECT MOD(234, 10); -&gt; 4 mysql&gt; SELECT 253 % 7; -&gt; 1 mysql&gt; SELECT MOD(29,9); -&gt; 2 mysql&gt; SELECT 29 MOD 9; -&gt; 2
+</code></pre>
+<p>这个函数可安全地使用于 <code>BIGINT</code> 值。最后一个示例可在 MySQL 4.1 中工作。</p>
+<h4 id="floorceilingroundtruncate-取整"><a class="header" href="#floorceilingroundtruncate-取整">Floor()、ceiling()、round()、truncate() ——取整</a></h4>
+<p><code>FLOOR(X)</code>返回不大于 <code>X</code> 的最大整数值：</p>
+<pre><code class="language-sql">mysql&gt; SELECT FLOOR(1.23); -&gt; 1 mysql&gt; SELECT FLOOR(-1.23); -&gt; -2
+</code></pre>
+<blockquote>
+<p>注意，返回值被转换为一个 <code>BIGINT</code>！</p>
+<p>可用DIV()替换该函数</p>
+</blockquote>
+<p><code>CEILING(X)</code>返回不小于 <code>X</code> 的最小整数：</p>
+<pre><code class="language-sql">mysql&gt; SELECT CEILING(1.23); -&gt; 2 mysql&gt; SELECT CEILING(-1.23); -&gt; -1
+</code></pre>
+<p>注意，返回值被转换为一个 <code>BIGINT</code>！</p>
+<p><code>ROUND(X,D)</code>将参数 <code>X</code> 四舍五入到最近的整数，然后返回。两个参数的形式是将一个数字四舍五入到 <code>D</code> 个小数后返回。</p>
+<pre><code class="language-sql">SELECT ROUND(-1.23，2);
+</code></pre>
+<blockquote>
+<p>注意，当参数在两个整数之间时， <code>ROUND()</code> 的行为取决于 C 库的实现。某些取整到最近的偶数，总是向下取，总是向上取，也可能总是接近于零。如果你需要某种取整类型，应该使用一个明确定义的函数比如 <code>TRUNCATE()</code> 或 <code>FLOOR()</code> 代替。</p>
+</blockquote>
+<p><code>TRUNCATE(X,D)</code>将数值 <code>X</code> 截到 <code>D</code> 个小数，然后返回。如果 <code>D</code> 为 <code>0</code>，结果将不包含小数点和小数部分</p>
+<p>直接截取取数。</p>
+<h4 id="计算符"><a class="header" href="#计算符">计算符</a></h4>
+<ul>
+<li>
+<p><code>EXP(X)</code>返回值 <code>e</code> (自然对数的底) 的 <code>X</code> 次方：</p>
+<p><code>mysql&gt; SELECT EXP(2); -&gt; 7.389056 mysql&gt; SELECT EXP(-2); -&gt; 0.135335</code></p>
+</li>
+<li>
+<p><code>LN(X)</code>返回 <code>X</code> 的自然对数：</p>
+<p><code>mysql&gt; SELECT LN(2); -&gt; 0.693147 mysql&gt; SELECT LN(-2); -&gt; NULL</code>这个函数在 MySQL 4.0.3 被新加入。在 MySQL 中，它是 <code>LOG(X)</code> 的同义词。</p>
+</li>
+<li>
+<p><code>LOG(X)</code></p>
+</li>
+<li>
+<p><code>LOG(B,X)</code>如果以一个参数调用，它返回 <code>X</code> 的自然对数：</p>
+<p><code>mysql&gt; SELECT LOG(2); -&gt; 0.693147 mysql&gt; SELECT LOG(-2); -&gt; NULL</code>如果以两个参数调用，这个函数返回 <code>X</code> 任意底 <code>B</code> 的对数：<code>mysql&gt; SELECT LOG(2,65536); -&gt; 16.000000 mysql&gt; SELECT LOG(1,100); -&gt; NULL</code>任意底选项在 MySQL 4.0.3 中被加入。<code>LOG(B,X)</code> 等价于 <code>LOG(X)/LOG(B)</code>。</p>
+</li>
+<li>
+<p><code>LOG2(X)</code>返回 <code>X</code> 的以 2 为底的对数：</p>
+<p><code>mysql&gt; SELECT LOG2(65536); -&gt; 16.000000 mysql&gt; SELECT LOG2(-100); -&gt; NULL``LOG2()</code> 通常可以用于计数出一个数字需要多少个比特位用于存储它。这个函数在 MySQL 4.0.3 中被添加。在更早的版本中，可以使用 <code>LOG(X)/LOG(2)</code> 来代替它。</p>
+</li>
+<li>
+<p><code>LOG10(X)</code>返回 <code>X</code> 以 10 为底的对数：</p>
+<p><code>mysql&gt; SELECT LOG10(2); -&gt; 0.301030 mysql&gt; SELECT LOG10(100); -&gt; 2.000000 mysql&gt; SELECT LOG10(-100); -&gt; NULL</code></p>
+</li>
+<li>
+<p><code>POW(X,Y)</code></p>
+</li>
+<li>
+<p><code>POWER(X,Y)</code>返回 <code>X</code> 的 <code>Y</code> 幂：</p>
+<p><code>mysql&gt; SELECT POW(2,2); -&gt; 4.000000 mysql&gt; SELECT POW(2,-2); -&gt; 0.250000</code></p>
+</li>
+<li>
+<p><code>SQRT(X)</code>返回 <code>X</code> 的非否平方根：</p>
+<p><code>mysql&gt; SELECT SQRT(4); -&gt; 2.000000 mysql&gt; SELECT SQRT(20); -&gt; 4.472136</code></p>
+</li>
+<li>
+<p><code>PI()</code>返回 PI 值(圆周率)。缺少显示 5 位小数，但是在 MySQL 内部，为 PI 使用全部的双精度。</p>
+<p><code>mysql&gt; SELECT PI(); -&gt; 3.141593 mysql&gt; SELECT PI()+0.000000000000000000; -&gt; 3.141592653589793116</code></p>
+</li>
+<li>
+<p><code>COS(X)</code>返回 <code>X</code> 的余弦，在这里，<code>X</code> 以弧度给出：</p>
+<p><code>mysql&gt; SELECT COS(PI()); -&gt; -1.000000</code></p>
+</li>
+<li>
+<p><code>SIN(X)</code>返回 <code>X</code> 的正弦，在这里，<code>X</code> 以弧度给出：</p>
+<p><code>mysql&gt; SELECT SIN(PI()); -&gt; 0.000000</code></p>
+</li>
+<li>
+<p><code>TAN(X)</code>返回 <code>X</code> 的正切，在这里，<code>X</code> 以弧度给出：</p>
+<p><code>mysql&gt; SELECT TAN(PI()+1); -&gt; 1.557408</code></p>
+</li>
+<li>
+<p><code>ACOS(X)</code>返回 <code>X</code> 的反余弦，更确切地说，返回余弦值为 <code>X</code> 的值。如果 <code>X</code> 不在 <code>-1</code> 到 <code>1</code> 之间的范围内，返回 <code>NULL</code>：</p>
+<p><code>mysql&gt; SELECT ACOS(1); -&gt; 0.000000 mysql&gt; SELECT ACOS(1.0001); -&gt; NULL mysql&gt; SELECT ACOS(0); -&gt; 1.570796</code></p>
+</li>
+<li>
+<p><code>ASIN(X)</code>返回 <code>X</code> 的反正弦，更确切地说，返回正弦值为 <code>X</code> 的值。如果 <code>X</code> 不在 <code>-1</code> 到 <code>1</code> 之间的范围内，返回 <code>NULL</code>：</p>
+<p><code>mysql&gt; SELECT ASIN(0.2); -&gt; 0.201358 mysql&gt; SELECT ASIN('foo'); -&gt; 0.000000</code></p>
+</li>
+<li>
+<p><code>ATAN(X)</code>返回 <code>X</code> 的反正切，更确切地说，返回正切值为 <code>X</code> 的值：</p>
+<p><code>mysql&gt; SELECT ATAN(2); -&gt; 1.107149 mysql&gt; SELECT ATAN(-2); -&gt; -1.107149</code></p>
+</li>
+<li>
+<p><code>ATAN(Y,X)</code></p>
+</li>
+<li>
+<p><code>ATAN2(Y,X)</code>返回两个变量 <code>X</code> 和 <code>Y</code> 的反正切。它类似于计算 <code>Y / X</code> 的反正切，除了两个参数的符号用于决定结果的象限：</p>
+<p><code>mysql&gt; SELECT ATAN(-2,2); -&gt; -0.785398 mysql&gt; SELECT ATAN2(PI(),0); -&gt; 1.570796</code></p>
+</li>
+<li>
+<p><code>COT(X)</code>返回 <code>X</code> 的余切：</p>
+<p><code>mysql&gt; SELECT COT(12); -&gt; -1.57267341 mysql&gt; SELECT COT(0); -&gt; NULL</code></p>
+</li>
+</ul>
+<h4 id="rand-取随机"><a class="header" href="#rand-取随机">rand() ——取随机</a></h4>
+<p><code>RAND(N)</code>返回一个范围在 <code>0</code> 到 <code>1.0</code> 之间的随机浮点值。如果一个整数参数 <code>N</code> 被指定，它被当做种子值使用(用于产生一个可重复的数值)：</p>
+
+                </main>
+
+                <nav class="nav-wrapper" aria-label="Page navigation">
+                    <!-- Mobile navigation buttons -->
+                    <a rel="prev" href="14-重复数据.html" class="mobile-nav-chapters previous"
+                        title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <div style="clear: both"></div>
+                </nav>
+            </div>
+        </div>
+
+        <nav class="nav-wide-wrapper" aria-label="Page navigation">
+            <a rel="prev" href="14-重复数据.html" class="nav-chapters previous" title="Previous chapter"
+                aria-label="Previous chapter" aria-keyshortcuts="Left">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        </nav>
+
+    </div>
+
+    <script type="text/javascript">
+        window.playground_copyable = true;
+    </script>
+    <script src="ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="editor.js" type="text/javascript" charset="utf-8"></script>
+    <script src="mode-rust.js" type="text/javascript" charset="utf-8"></script>
+    <script src="theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+    <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+    <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+    <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+    <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- Custom JS scripts -->
+</body>
+
+</html>
